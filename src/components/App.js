@@ -11,15 +11,26 @@ import '../styles/index.css';
 
 class MainApp extends Component {
   state = {
-    sidebarOpen: false
+    sidebarOpen: false,
+    yViewIndex: 0
   };
+
+  componentDidMount() {
+    this.props.loadLogs();
+  }
 
   sideMenuOpen = index => {
     if (index === 1) this.setState({ sidebarOpen: true });
     else this.setState({ sidebarOpen: false });
   };
 
+  handleYSwipe = index => {
+    this.setState({ yViewIndex: index });
+  };
+
   render() {
+    const { yViewIndex } = this.state;
+
     return (
       <SwipeableViews
         enableMouseEvents
@@ -28,11 +39,17 @@ class MainApp extends Component {
         onChangeIndex={this.sideMenuOpen}
         resistance
       >
-        <SwipeableViews enableMouseEvents containerStyle={{ height: '100vh' }} axis="y" resistance>
+        <SwipeableViews
+          onChangeIndex={this.handleYSwipe}
+          enableMouseEvents
+          containerStyle={{ height: '100vh' }}
+          axis="y"
+          resistance
+        >
           <MainView />
           <WeekView />
         </SwipeableViews>
-        <SideMenu open={this.state.sidebarOpen} />
+        <SideMenu hide={yViewIndex !== 0} open={this.state.sidebarOpen} />
       </SwipeableViews>
     );
   }
@@ -40,8 +57,8 @@ class MainApp extends Component {
 
 class App extends Component {
   render() {
-    const { isLoggedIn } = this.props;
-    return <div>{isLoggedIn ? <MainApp /> : <Login />}</div>;
+    const { isLoggedIn, loadLogs } = this.props;
+    return <div>{isLoggedIn ? <MainApp loadLogs={loadLogs} /> : <Login />}</div>;
   }
 }
 
@@ -51,6 +68,7 @@ export default connect(
   }),
   dispatch => ({
     login: dispatch.auth.login,
+    loadLogs: dispatch.log.loadLogs,
     logout: dispatch.auth.logout
   })
 )(App);

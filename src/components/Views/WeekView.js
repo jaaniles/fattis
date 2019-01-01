@@ -3,20 +3,12 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { DateTime } from 'luxon';
 
-import { Header } from '../Header';
 import { View } from './View';
+import { daysOfWeek } from '../../services/calendar';
 
 import weekdayIcons from '../../icons/icons';
 
-import { IoMdWalk, IoMdHeart, IoMdTrendingUp } from 'react-icons/io';
-
-const Weeks = styled(View)`
-  color: white;
-
-  ${Header} {
-    background: #ef5350;
-  }
-`;
+import { IoMdHeart, IoMdTrendingUp } from 'react-icons/io';
 
 const Days = styled.div`
   padding: 25px 0px 0px 5px;
@@ -61,50 +53,36 @@ const Img = styled.img`
 
 class WeekView extends React.Component {
   state = {
-    today: DateTime.local(),
-    weekNumber: 40
+    today: DateTime.local()
   };
 
-  componentDidMount() {
-    this.props.getWeek(this.state.weekNumber);
-  }
-
   render() {
-    const {
-      week: { week }
-    } = this.props;
+    const { logs } = this.props;
+    const { today } = this.state;
 
-    const today = DateTime.local();
-    const weekNumber = today.toFormat('W');
+    const days = daysOfWeek(today).map(d => logs[d.toISODate()] || {});
 
     return (
-      <Weeks>
-        <Header topHeader>
-          <p>WEEK {weekNumber}</p>
-        </Header>
+      <View>
         <Days>
-          {week &&
-            week.map((d, i) => (
-              <Row key={i}>
-                <Img alt="weekday" src={weekdayIcons[i]} />
-                <div>
-                  {d.healthyFood && <IoMdHeart />}
-                  {d.aerobic && <IoMdWalk />}
-                  {d.gym && <IoMdTrendingUp />}
-                </div>
-              </Row>
-            ))}
+          {days.map((d, i) => (
+            <Row key={i}>
+              <Img alt="weekday" src={weekdayIcons[i]} />
+              <div>
+                {d.HEALTHY && <IoMdHeart />}
+                {d.GYM && <IoMdTrendingUp />}
+              </div>
+            </Row>
+          ))}
         </Days>
-      </Weeks>
+      </View>
     );
   }
 }
 
 export default connect(
   state => ({
-    week: state.week
+    logs: state.log.logs || []
   }),
-  dispatch => ({
-    getWeek: dispatch.week.updateWeek
-  })
+  dispatch => ({})
 )(WeekView);

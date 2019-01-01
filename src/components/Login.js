@@ -16,7 +16,7 @@ const uiConfig = {
 class Login extends Component {
   componentDidMount() {
     const { setLoggedIn } = this.props;
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => setLoggedIn(!!user));
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => setLoggedIn(user));
   }
 
   componentWillUnmount() {

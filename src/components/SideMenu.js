@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { DateTime } from 'luxon';
 import { darken } from 'polished';
+import { DateTime } from 'luxon';
 
 import Bubble from './Characters/Bubble';
 import ActivityButton from './ActivityButton';
@@ -11,7 +11,7 @@ const Menu = styled.div`
   display: flex;
   flex-direction: column;
 
-  margin-left: -5px;
+  margin-left: ${props => (props.hide ? '20px' : '-5px')};
   position: absolute;
   color: white;
   background: #2d3746;
@@ -94,54 +94,32 @@ const LogoutButton = styled.button`
 
 class SideMenu extends React.Component {
   state = {
-    dayNumber: DateTime.local().toFormat('c') - 1,
     showTeller: false
   };
 
-  updateDayFood = toggle => {
-    this.setState({ showTeller: true });
-
-    this.props.setDayAchievement({
-      dayNumber: this.state.dayNumber,
-      healthyFood: toggle
-    });
-  };
-  updateDayGym = toggle => {
-    this.setState({ showTeller: true });
-
-    this.props.setDayAchievement({
-      dayNumber: this.state.dayNumber,
-      gym: toggle
-    });
-  };
-  updateDayAerobic = toggle => {
-    this.setState({ showTeller: true });
-
-    this.props.setDayAchievement({
-      dayNumber: this.state.dayNumber,
-      aerobic: toggle
-    });
+  log = what => {
+    this.props.logDate(what);
   };
 
   render() {
     const { showTeller } = this.state;
-    const {
-      logout,
-      open,
-      week: { week }
-    } = this.props;
-
-    const todayStatus = week[this.state.dayNumber];
+    const { logout, open, toggles, hide } = this.props;
 
     return (
-      <Menu open={open}>
+      <Menu hide={hide} open={open}>
         <Title>
           WHAT DID THE <Highlight>FAT GUY</Highlight> do today?
         </Title>
-        <ButtonsColumn>
-          <ActivityButton text="I ate healthy" toggled={todayStatus.healthyFood} handleClick={this.updateDayFood} />
-          <ActivityButton text="I worked out" toggled={todayStatus.gym} handleClick={this.updateDayGym} />
-        </ButtonsColumn>
+        {
+          <ButtonsColumn>
+            <ActivityButton
+              toggled={toggles && toggles.HEALTHY}
+              text="I ate healthy"
+              handleClick={() => this.log('HEALTHY')}
+            />
+            <ActivityButton toggled={toggles && toggles.GYM} text="I did gym" handleClick={() => this.log('GYM')} />
+          </ButtonsColumn>
+        }
         <Hitch />
         {showTeller && (
           <Teller>
@@ -163,10 +141,14 @@ class SideMenu extends React.Component {
 
 export default connect(
   state => ({
-    week: state.week
+    week: state.week,
+    isLoading: state.log.isLoading,
+    toggles: state.log.logs[DateTime.local().toISODate()]
   }),
   dispatch => ({
     setDayAchievement: dispatch.week.setDayAchievement,
+    loadLogs: dispatch.log.loadLogs,
+    logDate: dispatch.log.logDate,
     logout: dispatch.auth.logout
   })
 )(SideMenu);
