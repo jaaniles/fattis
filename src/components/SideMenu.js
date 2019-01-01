@@ -56,7 +56,7 @@ const Hitch = styled.div`
   width: 50px;
   height: 15px;
   margin-left: -25px;
-  background: black;
+  background: #2d3746;
 
   border-radius: 50px;
 

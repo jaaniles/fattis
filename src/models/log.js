@@ -1,10 +1,12 @@
 import { DateTime } from 'luxon';
 import fb from '../components/Firebase';
 
+const EMPTY_LOGS = [];
+
 const logs = {
   state: {
     isLoading: false,
-    logs: []
+    logs: EMPTY_LOGS
   },
   reducers: {
     setLog(state, logs) {
@@ -19,7 +21,7 @@ const logs = {
       const { uid } = rootState.auth.user;
 
       await fb.logs(uid).on('value', snap => {
-        this.setLog(snap.val());
+        this.setLog(snap.val() || EMPTY_LOGS);
       });
     },
     async logDate(payload, rootState) {
