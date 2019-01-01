@@ -146,7 +146,6 @@ export default connect(
     toggles: state.log.logs[DateTime.local().toISODate()]
   }),
   dispatch => ({
-    setDayAchievement: dispatch.week.setDayAchievement,
     loadLogs: dispatch.log.loadLogs,
     logDate: dispatch.log.logDate,
     logout: dispatch.auth.logout
