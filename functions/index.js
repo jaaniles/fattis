@@ -16,4 +16,11 @@ app.get('/hello', (req, res) => {
   res.send('world!');
 });
 
+app.post('/callback', (req, res) => {
+  admin
+    .database()
+    .ref('/hello')
+    .push({ hello: 'world' });
+});
+
 exports.webApi = functions.https.onRequest(main);

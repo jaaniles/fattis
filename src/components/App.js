@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Login from './Login';
 import MainView from './Views/MainView';
 import WeekView from './Views/WeekView';
 import SideMenu from './SideMenu';
+import Withings from './Withings';
 
 import '../styles/index.css';
 
@@ -57,10 +59,29 @@ class MainApp extends Component {
 
 class App extends Component {
   render() {
-    const { isLoggedIn, loadLogs } = this.props;
-    return <div>{isLoggedIn ? <MainApp loadLogs={loadLogs} /> : <Login />}</div>;
+    const { isLoggedIn } = this.props;
+
+    return (
+      <Router>
+        <div>
+          {isLoggedIn ? (
+            <Route path="/" exact component={MainAppConnected} />
+          ) : (
+            <Route path="/" exact component={Login} />
+          )}
+          <Route path="/api/v1/callback" component={Withings} />
+        </div>
+      </Router>
+    );
   }
 }
+
+const MainAppConnected = connect(
+  state => ({}),
+  dispatch => ({
+    loadLogs: dispatch.log.loadLogs
+  })
+)(MainApp);
 
 export default connect(
   state => ({
