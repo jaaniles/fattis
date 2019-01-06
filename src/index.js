@@ -5,7 +5,6 @@ import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 
 import Firebase, { FirebaseContext } from './components/Firebase';
-import registerServiceWorker from './registerServiceWorker';
 import { init } from '@rematch/core';
 
 import App from './components/App';
@@ -36,4 +35,3 @@ ReactDOM.render(
   </FirebaseContext.Provider>,
   document.getElementById('root')
 );
-registerServiceWorker();

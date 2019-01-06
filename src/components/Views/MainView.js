@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import media from 'styled-media-query';
+import { connect } from 'react-redux';
 
 import { Header } from '../Header';
 import { View } from './View';
@@ -39,4 +40,9 @@ class MainView extends React.Component {
   }
 }
 
-export default MainView;
+export default connect(
+  state => ({
+    access: state.withings.accessData
+  }),
+  dispatch => ({})
+)(MainView);

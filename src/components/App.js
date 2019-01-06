@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Login from './Login';
 import MainView from './Views/MainView';
 import WeekView from './Views/WeekView';
 import SideMenu from './SideMenu';
+import Withings from './Withings';
 
 import '../styles/index.css';
 
@@ -16,7 +18,17 @@ class MainApp extends Component {
   };
 
   componentDidMount() {
+    // TODO: Maybe a dataloader or something????
     this.props.loadLogs();
+    this.props.initWithings();
+    this.props.loadWeight();
+  }
+
+  componentDidUpdate() {
+    const { withings, updateWeight, weight } = this.props;
+    if (Object.keys(weight).length === 0 && withings.access_token) {
+      updateWeight();
+    }
   }
 
   sideMenuOpen = index => {
@@ -57,10 +69,33 @@ class MainApp extends Component {
 
 class App extends Component {
   render() {
-    const { isLoggedIn, loadLogs } = this.props;
-    return <div>{isLoggedIn ? <MainApp loadLogs={loadLogs} /> : <Login />}</div>;
+    const { isLoggedIn } = this.props;
+    return (
+      <Router>
+        <div>
+          {!isLoggedIn ? (
+            <Route path="/" component={Login} />
+          ) : (
+            <>
+              <Route path="/" exact component={MainAppConnected} />
+              <Route path="/callback" component={Withings} />
+            </>
+          )}
+        </div>
+      </Router>
+    );
   }
 }
+
+const MainAppConnected = connect(
+  state => ({ withings: state.withings, weight: state.weight }),
+  dispatch => ({
+    loadLogs: dispatch.log.loadLogs,
+    initWithings: dispatch.withings.init,
+    updateWeight: dispatch.withings.updateWeight,
+    loadWeight: dispatch.weight.loadWeight
+  })
+)(MainApp);
 
 export default connect(
   state => ({

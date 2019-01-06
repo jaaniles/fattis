@@ -103,7 +103,7 @@ class SideMenu extends React.Component {
 
   render() {
     const { showTeller } = this.state;
-    const { logout, open, toggles, hide } = this.props;
+    const { logout, authorizeWithings, open, toggles, hide } = this.props;
 
     return (
       <Menu hide={hide} open={open}>
@@ -133,6 +133,7 @@ class SideMenu extends React.Component {
             </div>
           </Teller>
         )}
+        <LogoutButton onClick={authorizeWithings}>withings</LogoutButton>
         <LogoutButton onClick={logout}>Logout</LogoutButton>
       </Menu>
     );
@@ -148,6 +149,7 @@ export default connect(
   dispatch => ({
     loadLogs: dispatch.log.loadLogs,
     logDate: dispatch.log.logDate,
+    authorizeWithings: dispatch.withings.authorize,
     logout: dispatch.auth.logout
   })
 )(SideMenu);

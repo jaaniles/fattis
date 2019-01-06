@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/functions';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -17,8 +18,10 @@ class Firebase {
     this.db = app.database();
   }
 
-  logs = uid => this.db.ref(`/logs/${uid}`);
-  user = uid => this.db.ref(`${uid}`);
+  weight = uid => this.db.ref(`/${uid}/weight`);
+  withings = uid => this.db.ref(`/${uid}/withings`);
+  logs = uid => this.db.ref(`/${uid}/logs`);
+  user = uid => this.db.ref(`/${uid}`);
 }
 
 export default new Firebase();
