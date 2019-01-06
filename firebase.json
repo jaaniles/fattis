@@ -4,11 +4,15 @@
   },
   "hosting": {
     "public": "build",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", ".firebase"],
     "rewrites": [
       {
         "source": "/api/v1/**",
         "function": "webApi"
+      },
+      {
+        "source": "/callback",
+        "destination": "/index.html"
       }
     ]
   }

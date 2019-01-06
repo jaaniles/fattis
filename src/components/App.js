@@ -18,7 +18,17 @@ class MainApp extends Component {
   };
 
   componentDidMount() {
+    // TODO: Maybe a dataloader or something????
     this.props.loadLogs();
+    this.props.initWithings();
+    this.props.loadWeight();
+  }
+
+  componentDidUpdate() {
+    const { withings, updateWeight, weight } = this.props;
+    if (Object.keys(weight).length === 0 && withings.access_token) {
+      updateWeight();
+    }
   }
 
   sideMenuOpen = index => {
@@ -60,16 +70,17 @@ class MainApp extends Component {
 class App extends Component {
   render() {
     const { isLoggedIn } = this.props;
-
     return (
       <Router>
         <div>
-          {isLoggedIn ? (
-            <Route path="/" exact component={MainAppConnected} />
+          {!isLoggedIn ? (
+            <Route path="/" component={Login} />
           ) : (
-            <Route path="/" exact component={Login} />
+            <>
+              <Route path="/" exact component={MainAppConnected} />
+              <Route path="/callback" component={Withings} />
+            </>
           )}
-          <Route path="/api/v1/callback" component={Withings} />
         </div>
       </Router>
     );
@@ -77,9 +88,12 @@ class App extends Component {
 }
 
 const MainAppConnected = connect(
-  state => ({}),
+  state => ({ withings: state.withings, weight: state.weight }),
   dispatch => ({
-    loadLogs: dispatch.log.loadLogs
+    loadLogs: dispatch.log.loadLogs,
+    initWithings: dispatch.withings.init,
+    updateWeight: dispatch.withings.updateWeight,
+    loadWeight: dispatch.weight.loadWeight
   })
 )(MainApp);
 

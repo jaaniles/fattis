@@ -1,32 +1,54 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import * as qs from 'query-string';
+import firebase from 'firebase/app';
+import 'firebase/functions';
 
 class Withings extends Component {
-  confirmAuth = () => {
+  state = {
+    redirect: null
+  };
+
+  componentDidMount = () => {
     const parsedLocation = qs.parse(window.location.search);
     this.oauth(parsedLocation);
   };
 
   oauth = async params => {
-    const res = await axios.post('https://account.withings.com/oauth2/token', {
+    const { user } = this.props;
+
+    const body = {
       grant_type: 'authorization_code',
       client_id: process.env.REACT_APP_WITHINGS_CLIENT_ID,
-      client_secret: process.env.REACT_APP_WITHINGS_CLIENT_SECRET,
       code: params.code,
-      redirect_uri: 'https://fattis-2c690.firebaseapp.com/api/v1/callback'
+      redirect_uri: 'https://fattis-2c690.firebaseapp.com/callback'
+    };
+
+    const callIt = firebase.functions().httpsCallable('webApi/api/v1/oauth');
+    const res = await callIt({
+      body: body,
+      uid: user.uid
     });
-    console.log(res);
+
+    this.setState({ redirect: res.data });
   };
 
   render() {
+    const { redirect } = this.state;
+
     return (
       <div>
         <h4>Authenticating Withings...</h4>
-        <button onClick={this.confirmAuth} />
+        {redirect && <Redirect to="/" />}
       </div>
     );
   }
 }
 
-export default Withings;
+export default connect(
+  state => ({
+    user: state.auth.user
+  }),
+  dispatch => ({})
+)(Withings);
