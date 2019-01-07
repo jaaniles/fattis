@@ -15,19 +15,19 @@ class Withings extends Component {
     this.oauth(parsedLocation);
   };
 
-  oauth = async params => {
+  oauth = async urlParams => {
     const { user } = this.props;
 
-    const body = {
+    const params = {
       grant_type: 'authorization_code',
       client_id: process.env.REACT_APP_WITHINGS_CLIENT_ID,
-      code: params.code,
+      code: urlParams.code,
       redirect_uri: 'https://fattis-2c690.firebaseapp.com/callback'
     };
 
-    const callIt = firebase.functions().httpsCallable('webApi/api/v1/oauth');
-    const res = await callIt({
-      body: body,
+    const getAccess = firebase.functions().httpsCallable('webApi/api/v1/withingsAccess');
+    const res = await getAccess({
+      params,
       uid: user.uid
     });
 

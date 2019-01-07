@@ -1,10 +1,19 @@
 import { DateTime } from 'luxon';
+import firebase from 'firebase/app';
 
 import fb from '../components/Firebase';
 
 const withings = {
-  state: {},
+  state: {
+    lastRefreshTimestamp: null
+  },
   reducers: {
+    setRefreshTimestamp(state) {
+      return {
+        ...state,
+        lastRefreshTimestamp: Math.round(new Date().getTime() / 1000)
+      };
+    },
     setAccessData(state, accessData) {
       return {
         ...state,
@@ -15,7 +24,7 @@ const withings = {
   effects: dispatch => ({
     async init(payload, rootState) {
       const { uid } = rootState.auth.user;
-      fb.withings(uid).once('value', this.setAccessData);
+      fb.withings(uid).on('value', this.setAccessData);
     },
     async updateWeight(payload, rootState) {
       const { uid } = rootState.auth.user;
@@ -27,7 +36,15 @@ const withings = {
 
       const url = `https://wbsapi.withings.net/measure?action=getmeas&access_token=${access_token}&meastype=1`;
       const fetchWeightData = async () => await (await fetch(url)).json();
+
       const response = await fetchWeightData();
+
+      // TODO: implement middleware that checks this?
+      if (!response || response.status === 401) {
+        await this.refreshToken();
+        this.updateWeight();
+        return;
+      }
 
       const weightData = response.body.measuregrps.map(measure => {
         const date = DateTime.fromMillis(measure.created * 1000);
@@ -51,6 +68,28 @@ const withings = {
             value: m.value
           }
         });
+      });
+    },
+    async refreshToken(payload, rootState) {
+      const { lastRefreshTimestamp } = rootState.withings;
+      const now = Math.round(new Date().getTime() / 1000);
+
+      if (lastRefreshTimestamp && now - lastRefreshTimestamp < 10) {
+        return;
+      }
+
+      this.setRefreshTimestamp();
+
+      const params = {
+        grant_type: 'refresh_token',
+        client_id: process.env.REACT_APP_WITHINGS_CLIENT_ID,
+        refresh_token: rootState.withings.refresh_token
+      };
+
+      const refreshToken = firebase.functions().httpsCallable('webApi/api/v1/withingsAccess');
+      await refreshToken({
+        params,
+        uid: rootState.auth.user.uid
       });
     },
     async authorize(payload, rootState) {

@@ -17,19 +17,11 @@ main.use('/api/v1', app);
 main.use(bodyParser.json());
 main.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/hello', (req, res) => {
-  res.send('world!');
-});
-
-app.post('/oauth', async (req, res) => {
+app.post('/withingsAccess', async (req, res) => {
   const { data } = req.body;
-  const params = data.body;
   const d = {
-    grant_type: params.grant_type,
-    client_id: params.client_id,
-    client_secret: functions.config().withings.secret,
-    code: params.code,
-    redirect_uri: params.redirect_uri
+    ...data.params,
+    client_secret: functions.config().withings.secret
   };
 
   const response = await axios({
@@ -41,7 +33,7 @@ app.post('/oauth', async (req, res) => {
     }
   });
 
-  const allSet = await setWithingsAccessToken(response.data, data.uid);
+  await setWithingsAccessToken(response.data, data.uid);
   res.send({ data: true });
 });
 
