@@ -5,6 +5,8 @@ import { darken } from 'polished';
 import { DateTime } from 'luxon';
 
 import Bubble from './Characters/Bubble';
+import FattisPlaceholder from './Characters/FattisPlaceholder';
+import FatIcon from './FatIcon';
 import ActivityButton from './ActivityButton';
 
 const Menu = styled.div`
@@ -27,17 +29,6 @@ const Menu = styled.div`
 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-`;
-
-const ButtonsColumn = styled.div`
-  display: flex;
-  height: 70vh;
-
-  padding-bottom: 50px;
-
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
 `;
 
 const Title = styled.h4`
@@ -82,14 +73,20 @@ const Teller = styled.div`
   }
 `;
 
-const LogoutButton = styled.button`
-  text-transform: uppercase;
-  background: none;
-  border-radius: 5px;
-  border-color: white;
-  color: white;
-  padding: 2px;
-  width: 100px;
+const CharacterContainer = styled.div`
+  margin-top: 3rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StatusIconsBar = styled.div`
+  margin-top: 2rem;
+
+  display: flex;
+  flex-direction: row;
 `;
 
 class SideMenu extends React.Component {
@@ -103,23 +100,30 @@ class SideMenu extends React.Component {
 
   render() {
     const { showTeller } = this.state;
-    const { logout, authorizeWithings, open, toggles, hide } = this.props;
+    const { open, toggles, hide } = this.props;
 
     return (
       <Menu hide={hide} open={open}>
         <Title>
           WHAT DID THE <Highlight>FAT GUY</Highlight> do today?
         </Title>
-        {
-          <ButtonsColumn>
-            <ActivityButton
-              toggled={toggles && toggles.HEALTHY}
-              text="I ate healthy"
-              handleClick={() => this.log('HEALTHY')}
-            />
-            <ActivityButton toggled={toggles && toggles.GYM} text="I did gym" handleClick={() => this.log('GYM')} />
-          </ButtonsColumn>
-        }
+        <CharacterContainer>
+          <FattisPlaceholder />
+          <StatusIconsBar>
+            <FatIcon />
+            <FatIcon />
+            <FatIcon />
+            <FatIcon />
+          </StatusIconsBar>
+        </CharacterContainer>
+        <div>
+          <ActivityButton
+            toggled={toggles && toggles.HEALTHY}
+            text="I ate healthy"
+            handleClick={() => this.log('HEALTHY')}
+          />
+          <ActivityButton toggled={toggles && toggles.GYM} text="I did gym" handleClick={() => this.log('GYM')} />
+        </div>
         <Hitch />
         {showTeller && (
           <Teller>
@@ -133,8 +137,6 @@ class SideMenu extends React.Component {
             </div>
           </Teller>
         )}
-        <LogoutButton onClick={authorizeWithings}>withings</LogoutButton>
-        <LogoutButton onClick={logout}>Logout</LogoutButton>
       </Menu>
     );
   }

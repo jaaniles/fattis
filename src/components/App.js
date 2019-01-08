@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from './Login';
 import MainView from './Views/MainView';
 import WeekView from './Views/WeekView';
-import SideMenu from './SideMenu';
+import SettingsView from './Views/SettingsView';
+import FattisView from './Views/FattisView';
 import Withings from './Withings';
 
 import '../styles/index.css';
@@ -41,7 +42,7 @@ class MainApp extends Component {
   };
 
   render() {
-    const { yViewIndex } = this.state;
+    //ßconst { yViewIndex } = this.state;
 
     return (
       <SwipeableViews
@@ -60,8 +61,9 @@ class MainApp extends Component {
         >
           <MainView />
           <WeekView />
+          <SettingsView />
         </SwipeableViews>
-        <SideMenu hide={yViewIndex !== 0} open={this.state.sidebarOpen} />
+        <FattisView />
       </SwipeableViews>
     );
   }

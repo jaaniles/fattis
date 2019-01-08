@@ -18,6 +18,8 @@ const Content = styled.div`
   display: flex;
   height: 90vh;
 
+  padding: 15px;
+
   flex-direction: row;
   align-items: flex-end;
   justify-content: flex-end;

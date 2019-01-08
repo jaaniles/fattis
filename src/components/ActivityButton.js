@@ -3,28 +3,25 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Button = styled.button`
-  padding: 16px 0px 16px 0;
+  padding: 2px;
+  width: 200px;
 
-  width: 100%;
-  color: black;
-  background: white;
+  color: white;
+  background: none;
+  border: 1px solid white;
+  border-radius: 5px;
+
+  text-transform: uppercase;
 
   font-size: 16pt;
-
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
   ${props =>
     props.pressed &&
     `
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transform: scale(0.80);
-    background: white;
-    color: black;
-    border-top: 5px solid #B1DE98;
-    border-left: 5px solid #B1DE98;
-    border-bottom: 5px solid #B1DE98;
+    color: white;
+    border: 2px solid #B1DE98;
   `};
 
   transition: all 0.2s cubic-bezier(0.96, 1.5, 0.96, 1.5);
@@ -36,10 +33,6 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 45%;
-
-  margin-top: 32px;
-  margin-right: -15px;
 `;
 
 class ActivityButton extends Component {
