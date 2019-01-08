@@ -24,6 +24,8 @@ const Icon = styled(ReactSVG)`
   width: 35px;
   height: 35px;
   filter: grayscale(100%);
+
+  transition: all 0.65s ease-in-out;
 `;
 
 const Page = styled.div`
@@ -49,6 +51,12 @@ const Actions = styled.div`
   width: 90%;
 `;
 
+const BottomText = styled.p`
+  font-size: 10pt;
+  color: #707086 !important;
+  text-transform: uppercase;
+`;
+
 const Action = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,7 +72,7 @@ const Action = styled.div`
     props.pressed &&
     css`
       color: #e37868;
-      background: ${darken(0.05, '#34344d')};
+      background: ${darken(0.1, '#34344d')};
       transform: scale(0.95);
       ${Icon} {
         filter: none;
@@ -72,11 +80,14 @@ const Action = styled.div`
     `};
 
   transition: all 0.3s cubic-bezier(0.96, 1.5, 0.96, 1.5);
-`;
 
+  ${BottomText} {
+    position: absolute;
+    bottom: -20%;
+  }
+`;
 class FattisView extends Component {
   log = what => {
-    console.log('Logdate', what);
     this.props.logDate(what);
   };
 
@@ -97,8 +108,9 @@ class FattisView extends Component {
           <Action pressed={toggles && toggles.HEALTHY} onClick={() => this.log('HEALTHY')}>
             <Icon src={healthyIcon} />
             <p>ATE HEALTHY</p>
+            <BottomText>2 times this week</BottomText>
           </Action>
-          <Action>
+          <Action pressed={toggles && toggles.WALK} onClick={() => this.log('WALK')}>
             <Icon src={walkIcon} />
             <p>EXTRA WALK</p>
           </Action>

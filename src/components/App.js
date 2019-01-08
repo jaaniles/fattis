@@ -59,11 +59,11 @@ class MainApp extends Component {
           axis="y"
           resistance
         >
-          <MainView />
+          <FattisView />
           <WeekView />
           <SettingsView />
         </SwipeableViews>
-        <FattisView />
+        <MainView />
       </SwipeableViews>
     );
   }
