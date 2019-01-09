@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { injectGlobal } from 'styled-components';
+import reset from 'css-wipe/js';
+import * as ds from '../design';
 
 import Login from './Login';
 import MainView from './Views/MainView';
@@ -9,8 +12,6 @@ import WeekView from './Views/WeekView';
 import SettingsView from './Views/SettingsView';
 import FattisView from './Views/FattisView';
 import Withings from './Withings';
-
-import '../styles/index.css';
 
 class MainApp extends Component {
   state = {
@@ -88,6 +89,62 @@ class App extends Component {
     );
   }
 }
+
+injectGlobal(reset, {
+  html: {
+    height: '100%'
+  },
+
+  body: {
+    ...ds.type.bodyFont,
+    backgroundColor: ds.colors.background.level1,
+    color: ds.type.color.primary,
+    fontSize: ds.sizes.default,
+    height: '100%',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    margin: 0
+  },
+
+  '#root': {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100%'
+  },
+
+  a: {
+    backgroundImage: `linear-gradient(0deg, ${ds.colors.blue} 0, ${ds.colors.blue} 2px, transparent 2px)`,
+    backgroundPosition: 'bottom center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '100%',
+    color: 'inherit',
+    textDecoration: 'none',
+
+    '&:hover': {
+      color: ds.colors.blue
+    }
+  },
+
+  h1: {
+    ...ds.headings.h1
+  },
+
+  h2: {
+    ...ds.headings.h2
+  },
+
+  h3: {
+    ...ds.headings.h3
+  },
+
+  h4: {
+    ...ds.headings.h4
+  },
+
+  strong: {
+    fontWeight: 600
+  }
+});
 
 const MainAppConnected = connect(
   state => ({ withings: state.withings, weight: state.weight }),

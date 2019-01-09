@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import * as ds from '../../design';
+
 const LogoutButton = styled.button`
   text-transform: uppercase;
   background: none;
@@ -15,11 +17,14 @@ const LogoutButton = styled.button`
 `;
 
 const Container = styled.div`
-  padding: 5rem 2rem 2rem 2rem;
+  padding: ${ds.scale(4)};
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  color: ${ds.colors.red};
 `;
 
 class SettingsView extends Component {
@@ -28,7 +33,7 @@ class SettingsView extends Component {
 
     return (
       <Container>
-        <h4>Settings</h4>
+        <h1>Settings</h1>
         <LogoutButton onClick={authorizeWithings}>Authorize Withings</LogoutButton>
         <LogoutButton onClick={logout}>Logout</LogoutButton>
       </Container>

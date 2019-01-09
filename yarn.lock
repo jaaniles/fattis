@@ -832,6 +832,16 @@
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
 
+"@emotion/is-prop-valid@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-0.7.3.tgz#a6bf4fa5387cbba59d44e698a4680f481a8da6cc"
+  dependencies:
+    "@emotion/memoize" "0.7.1"
+
+"@emotion/memoize@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.1.tgz#e93c13942592cf5ef01aa8297444dc192beee52f"
+
 "@firebase/app-types@0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@firebase/app-types/-/app-types-0.3.2.tgz#a92dc544290e2893bd8c02a81e684dae3d8e7c85"
@@ -1021,6 +1031,14 @@
 "@tanem/svg-injector@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@tanem/svg-injector/-/svg-injector-2.1.1.tgz#e9bc12d87d2d1adfcaa46c17c9f481c563ee9d88"
+
+"@types/invariant@^2.2.29":
+  version "2.2.29"
+  resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.29.tgz#aa845204cd0a289f65d47e0de63a6a815e30cc66"
+
+"@types/node@^10.0.5":
+  version "10.12.18"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
 
 "@types/q@^1.5.1":
   version "1.5.1"
@@ -2610,6 +2628,10 @@ css-what@2.1:
 css-what@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-2.1.2.tgz#c0876d9d0480927d7d4920dcd72af3595649554d"
+
+css-wipe@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/css-wipe/-/css-wipe-4.3.0.tgz#d9485735a9bf5cb3adcb9fa1809a15686cf5b057"
 
 cssdb@^4.1.0:
   version "4.3.0"
@@ -6638,7 +6660,18 @@ polished@^2.3.1:
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-popmotion@^8.5.4:
+popmotion-pose@^3.4.0:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/popmotion-pose/-/popmotion-pose-3.4.1.tgz#e13e52ba9fe02051926ca6313a7615876f459990"
+  dependencies:
+    "@popmotion/easing" "^1.0.1"
+    hey-listen "^1.0.5"
+    popmotion "^8.5.0"
+    pose-core "^2.0.0"
+    style-value-types "^3.0.6"
+    tslib "^1.9.1"
+
+popmotion@^8.5.0, popmotion@^8.5.4:
   version "8.5.5"
   resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-8.5.5.tgz#0b6bfa6c82d457e4cccd2375923539b6d975b9e8"
   dependencies:
@@ -6657,6 +6690,15 @@ portfinder@^1.0.9:
     async "^1.5.2"
     debug "^2.2.0"
     mkdirp "0.5.x"
+
+pose-core@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/pose-core/-/pose-core-2.0.2.tgz#6a0bd1e7218e4bf30be9c26a30be8eeb5b8695df"
+  dependencies:
+    "@types/invariant" "^2.2.29"
+    "@types/node" "^10.0.5"
+    hey-listen "^1.0.5"
+    tslib "^1.9.1"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -7555,6 +7597,15 @@ react-kawaii@^0.8.0:
 react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+
+react-pose@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/react-pose/-/react-pose-4.0.5.tgz#056309b62e32ce0190f90ef35d7ade1b4c463d85"
+  dependencies:
+    "@emotion/is-prop-valid" "^0.7.3"
+    hey-listen "^1.0.5"
+    popmotion-pose "^3.4.0"
+    tslib "^1.9.1"
 
 react-redux-firebase@^2.2.5:
   version "2.2.5"
