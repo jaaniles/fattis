@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DateTime } from 'luxon';
 
-import Highlight from '../Highlight';
-import Page from '../Layout/Page';
-import FattisPlaceholder from '../Characters/FattisPlaceholder';
+import Highlight from '../../Highlight';
+import Page from '../../Layout/Page';
+import FattisPlaceholder from '../../Characters/FattisPlaceholder';
 import Actions from './Actions';
 
 class FattisView extends Component {

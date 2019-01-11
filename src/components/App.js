@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+import { PoseGroup } from 'react-pose';
 import reset from 'css-wipe/js';
-import * as ds from '../design';
 
 import Login from './Login';
-import MainView from './Views/MainView';
+import ChatView from './Views/ChatView/';
 import WeekView from './Views/WeekView';
 import SettingsView from './Views/SettingsView';
-import FattisView from './Views/FattisView';
+import FattisView from './Views/FattisView/';
 import Withings from './Withings';
+import * as ds from '../design';
 
 class MainApp extends Component {
   state = {
@@ -53,6 +54,7 @@ class MainApp extends Component {
         onChangeIndex={this.sideMenuOpen}
         resistance
       >
+        <ChatView />
         <SwipeableViews
           onChangeIndex={this.handleYSwipe}
           enableMouseEvents
@@ -64,7 +66,6 @@ class MainApp extends Component {
           <WeekView />
           <SettingsView />
         </SwipeableViews>
-        <MainView />
       </SwipeableViews>
     );
   }
@@ -74,23 +75,28 @@ class App extends Component {
   render() {
     const { isLoggedIn } = this.props;
     return (
-      <Router>
-        <div>
-          {!isLoggedIn ? (
-            <Route path="/" component={Login} />
-          ) : (
-            <>
-              <Route path="/" exact component={MainAppConnected} />
-              <Route path="/callback" component={Withings} />
-            </>
-          )}
-        </div>
-      </Router>
+      <>
+        <GlobalStyle />
+        <PoseGroup>
+          <Router key="router">
+            <div>
+              {!isLoggedIn ? (
+                <Route path="/" component={Login} key="login" />
+              ) : (
+                <>
+                  <Route path="/" exact component={MainAppConnected} key="main" />
+                  <Route path="/callback" component={Withings} key="callback" />
+                </>
+              )}
+            </div>
+          </Router>
+        </PoseGroup>
+      </>
     );
   }
 }
 
-injectGlobal(reset, {
+const GlobalStyle = createGlobalStyle(reset, {
   html: {
     height: '100%'
   },

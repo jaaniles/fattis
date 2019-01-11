@@ -30,9 +30,11 @@ export const colors = {
   blue: '#7EB7E1',
   red: '#E37868',
   green: '#74D0AF',
+  tea: '#CBEAA6',
 
   background: {
-    level0: '#34344d'
+    level0: '#34344d',
+    level5: '#14080E'
   }
 };
 
@@ -54,6 +56,7 @@ export const type = {
   color: {
     interactive: '#2575FF',
     primary: '#E7E8F2',
+    dark: '#14080E',
     secondary: '#707086',
     tertiary: '#2F436F'
   },
@@ -65,9 +68,9 @@ export const type = {
   },
 
   titleFont: {
-    fontFamily: 'Oswald, sans-serif',
+    fontFamily: 'Raleway, sans-serif',
     fontWeight: 400,
-    lineHeight: 1.25,
+    lineHeight: 1.75,
     textTransform: 'uppercase'
   }
 };

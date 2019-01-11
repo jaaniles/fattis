@@ -3,12 +3,12 @@ import styled, { css } from 'styled-components';
 import ReactSVG from 'react-svg';
 import { darken } from 'polished';
 
-import Row from '../Layout/FlexRowCentered';
-import * as ds from '../../design';
+import Row from '../../Layout/FlexRowCentered';
+import * as ds from '../../../design';
 
-const gymIcon = require('../../icons/workout.svg');
-const walkIcon = require('../../icons/walk.svg');
-const healthyIcon = require('../../icons/healthy.svg');
+const gymIcon = require('../../../icons/workout.svg');
+const walkIcon = require('../../../icons/walk.svg');
+const healthyIcon = require('../../../icons/healthy.svg');
 
 const Icon = styled(ReactSVG)`
   width: 55px;

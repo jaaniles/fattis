@@ -4,10 +4,6 @@ import styled from 'styled-components';
 import * as ds from '../design';
 
 const Textbox = styled.div`
-  position: fixed;
-
-  top: 15%;
-
   margin-top: ${ds.scale(1)};
   padding: 4px ${ds.scale(2)};
   color: ${ds.colors.black};
