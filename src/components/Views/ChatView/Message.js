@@ -1,10 +1,15 @@
 import posed from 'react-pose';
 import styled from 'styled-components';
 
-const Message = styled.li({
+import * as ds from '../../../design';
+
+const Message = styled.div({
+  width: '300px',
+
   backgroundColor: 'hsl(0, 0%, 96%)',
-  borderRadius: '0.5rem',
-  padding: '1rem 2rem',
+  color: ds.type.color.dark,
+  borderRadius: ds.scale(1),
+  padding: '5px 20px 5px 20px',
   transition: 'all 125ms',
 
   '& + &': {
@@ -12,7 +17,7 @@ const Message = styled.li({
   },
 
   '&:last-of-type': {
-    borderBottomLeftRadius: 0
+    borderBottomRightRadius: 0
   }
 });
 
