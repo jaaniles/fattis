@@ -20,8 +20,15 @@ class Firebase {
 
   weight = uid => this.db.ref(`/${uid}/weight`);
   withings = uid => this.db.ref(`/${uid}/withings`);
+  chat = uid => this.db.ref(`/${uid}/chat`);
   logs = uid => this.db.ref(`/${uid}/logs`);
   user = uid => this.db.ref(`/${uid}`);
+
+  toArray = data =>
+    Object.keys(data).map(key => ({
+      id: key,
+      ...data[key]
+    }));
 }
 
 export default new Firebase();

@@ -1,12 +1,13 @@
 import posed from 'react-pose';
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 import * as ds from '../../../design';
 
 const Message = styled.div({
   width: '300px',
 
-  backgroundColor: 'hsl(0, 0%, 96%)',
+  backgroundColor: darken(0.05, 'white'),
   color: ds.type.color.dark,
   borderRadius: ds.scale(1),
   padding: '5px 20px 5px 20px',
@@ -28,6 +29,6 @@ export default posed(Message)({
   },
   exit: {
     opacity: 0,
-    y: '25%'
+    y: '50%'
   }
 });

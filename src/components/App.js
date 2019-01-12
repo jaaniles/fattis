@@ -17,7 +17,8 @@ import * as ds from '../design';
 class MainApp extends Component {
   state = {
     sidebarOpen: false,
-    yViewIndex: 0
+    yViewIndex: 0,
+    xViewindex: 0
   };
 
   componentDidMount() {
@@ -35,6 +36,7 @@ class MainApp extends Component {
   }
 
   sideMenuOpen = index => {
+    this.handleXSwipe(index);
     if (index === 1) this.setState({ sidebarOpen: true });
     else this.setState({ sidebarOpen: false });
   };
@@ -43,8 +45,12 @@ class MainApp extends Component {
     this.setState({ yViewIndex: index });
   };
 
+  handleXSwipe = index => {
+    this.setState({ xViewindex: index });
+  };
+
   render() {
-    //ßconst { yViewIndex } = this.state;
+    const { xViewindex } = this.state;
 
     return (
       <SwipeableViews
@@ -54,7 +60,6 @@ class MainApp extends Component {
         onChangeIndex={this.sideMenuOpen}
         resistance
       >
-        <ChatView />
         <SwipeableViews
           onChangeIndex={this.handleYSwipe}
           enableMouseEvents
@@ -66,6 +71,7 @@ class MainApp extends Component {
           <WeekView />
           <SettingsView />
         </SwipeableViews>
+        <ChatView isShown={xViewindex === 1} />
       </SwipeableViews>
     );
   }

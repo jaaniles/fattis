@@ -3,8 +3,8 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const jump = keyframes({
-  from: { transform: 'translateY(-50%)' },
-  to: { transform: 'translateY(50%)' }
+  from: { transform: 'translateX(-50%)' },
+  to: { transform: 'translateX(50%)' }
 });
 
 const Ball1 = styled.div`
@@ -33,7 +33,7 @@ const fadeIn = keyframes({
   to: { opacity: 1 }
 });
 
-const Container = styled.i`
+const Container = styled.div`
   animation: ${fadeIn} 125ms ease-in-out;
   display: block;
   height: 0.5rem;

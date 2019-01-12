@@ -11,11 +11,16 @@ const Page = styled(PageLayout)`
 `;
 
 class ChatView extends React.Component {
+  componentDidMount() {
+    this.props.loadChat();
+  }
+
   render() {
+    const { chat, readMessage, addNewMessage, isShown } = this.props;
+
     return (
       <Page>
-        <h1>Fattis</h1>
-        <Chat />
+        <Chat enableReading={isShown} chat={chat} readMessage={readMessage} addNewMessage={addNewMessage} />
       </Page>
     );
   }
@@ -23,7 +28,12 @@ class ChatView extends React.Component {
 
 export default connect(
   state => ({
-    access: state.withings.accessData
+    access: state.withings.accessData,
+    chat: state.chat
   }),
-  dispatch => ({})
+  dispatch => ({
+    loadChat: dispatch.chat.loadChat,
+    readMessage: dispatch.chat.readMessage,
+    addNewMessage: dispatch.chat.addNewMessage
+  })
 )(ChatView);
