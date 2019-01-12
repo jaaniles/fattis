@@ -28,6 +28,10 @@ const Container = styled.div`
 `;
 
 class SettingsView extends Component {
+  message = () => {
+    this.props.addNewMessage({ message: 'Fat fuck' });
+  };
+
   render() {
     const { logout, authorizeWithings } = this.props;
 
@@ -36,6 +40,7 @@ class SettingsView extends Component {
         <h1>Settings</h1>
         <LogoutButton onClick={authorizeWithings}>Authorize Withings</LogoutButton>
         <LogoutButton onClick={logout}>Logout</LogoutButton>
+        <LogoutButton onClick={this.message}>MESSAGE ME BRO</LogoutButton>
       </Container>
     );
   }
@@ -47,6 +52,7 @@ export default connect(
     loadLogs: dispatch.log.loadLogs,
     logDate: dispatch.log.logDate,
     authorizeWithings: dispatch.withings.authorize,
-    logout: dispatch.auth.logout
+    logout: dispatch.auth.logout,
+    addNewMessage: dispatch.chat.addNewMessage
   })
 )(SettingsView);

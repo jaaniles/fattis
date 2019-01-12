@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Cat } from 'react-kawaii';
 
 import Message from './Message';
 import Typing from './Typing';
@@ -36,7 +37,6 @@ class Chat extends Component {
 
   componentDidMount() {
     setInterval(() => this.writer(), 1000);
-    this.props.addNewMessage({ message: 'Hohooo hahaaa' });
   }
 
   render() {
@@ -60,7 +60,10 @@ class Chat extends Component {
             {typing && <Typing />}
           </FlexColumn>
         ) : (
-          <h4>Empty state</h4>
+          <div>
+            <Message>Don´t you have any friends? No messages for the fat one here. </Message>
+            <Cat size={320} mood="shocked" color="#596881" />
+          </div>
         )}
       </div>
     );
