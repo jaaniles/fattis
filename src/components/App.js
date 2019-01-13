@@ -18,7 +18,7 @@ class MainApp extends Component {
   state = {
     sidebarOpen: false,
     yViewIndex: 0,
-    xViewindex: 0
+    xViewindex: 1
   };
 
   componentDidMount() {

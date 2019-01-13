@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Cat } from 'react-kawaii';
 
 import Message from './Message';
 import Typing from './Typing';
+import ChatEmptyState from './ChatEmptyState';
 import FlexColumn from '../../Layout/FlexColumnCenterHorizontal';
 
 class Chat extends Component {
@@ -60,10 +60,7 @@ class Chat extends Component {
             {typing && <Typing />}
           </FlexColumn>
         ) : (
-          <div>
-            <Message>Don´t you have any friends? No messages for the fat one here. </Message>
-            <Cat size={320} mood="shocked" color="#596881" />
-          </div>
+          <ChatEmptyState loading={chat.loading} noMessages={chat.history.length < 1} />
         )}
       </div>
     );

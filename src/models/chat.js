@@ -5,7 +5,8 @@ import fb from '../components/Firebase';
 const chat = {
   state: {
     history: [],
-    newMessages: []
+    newMessages: [],
+    loading: true
   },
   reducers: {
     setChat(state, payload) {
@@ -14,16 +15,25 @@ const chat = {
         history: payload.history,
         newMessages: payload.newMessages
       };
+    },
+    setLoading(state, payload) {
+      return {
+        ...state,
+        loading: payload
+      };
     }
   },
   effects: dispatch => ({
     async loadChat(payload, rootState) {
+      this.setLoading(true);
+
       const { uid } = rootState.auth.user;
 
       await fb.chat(uid).on('value', snap => {
         const data = snap.val();
 
         if (!data) {
+          this.setLoading(false);
           return;
         }
 
@@ -32,6 +42,7 @@ const chat = {
         const history = chat.filter(d => d.seen === true);
 
         this.setChat({ newMessages, history });
+        this.setLoading(false);
       });
     },
     async readMessage(payload, rootState) {
