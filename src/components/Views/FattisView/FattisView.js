@@ -14,7 +14,7 @@ class FattisView extends Component {
   };
 
   render() {
-    const { toggles, newMessages } = this.props;
+    const { toggles, newMessages, changeView } = this.props;
 
     return (
       <Page>
@@ -23,7 +23,7 @@ class FattisView extends Component {
           Did <Highlight>FATTIS</Highlight> do anything worthwhile today?
         </h4>
         <Actions toggles={toggles} handleClick={this.log} />
-        {newMessages.length > 0 && <NewMessagesWidget initialPose="exit" pose="enter" />}
+        {newMessages.length > 0 && <NewMessagesWidget handleClick={changeView} initialPose="exit" pose="enter" />}
       </Page>
     );
   }

@@ -37,11 +37,11 @@ const Icon = styled.img({
 });
 
 const NewMessagesWidget = React.forwardRef((props, ref) => (
-  <div ref={ref}>
+  <button ref={ref} onClick={() => props.handleClick(1)}>
     <NewMessages>
       <Icon src={newMessageIcon} alt="New messages!" />
     </NewMessages>
-  </div>
+  </button>
 ));
 
 export default posed(NewMessagesWidget)({

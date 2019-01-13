@@ -36,21 +36,21 @@ class MainApp extends Component {
   }
 
   sideMenuOpen = index => {
-    this.handleXSwipe(index);
+    this.setXIndex(index);
     if (index === 1) this.setState({ sidebarOpen: true });
     else this.setState({ sidebarOpen: false });
   };
 
-  handleYSwipe = index => {
+  setYIndex = index => {
     this.setState({ yViewIndex: index });
   };
 
-  handleXSwipe = index => {
+  setXIndex = index => {
     this.setState({ xViewindex: index });
   };
 
   render() {
-    const { xViewindex } = this.state;
+    const { xViewindex, yViewIndex } = this.state;
 
     return (
       <SwipeableViews
@@ -59,15 +59,17 @@ class MainApp extends Component {
         axis="x"
         onChangeIndex={this.sideMenuOpen}
         resistance
+        index={xViewindex}
       >
         <SwipeableViews
-          onChangeIndex={this.handleYSwipe}
+          onChangeIndex={this.setYIndex}
           enableMouseEvents
           containerStyle={{ height: '100vh' }}
           axis="y"
           resistance
+          index={yViewIndex}
         >
-          <FattisView />
+          <FattisView changeView={this.setXIndex} />
           <WeekView />
           <SettingsView />
         </SwipeableViews>
