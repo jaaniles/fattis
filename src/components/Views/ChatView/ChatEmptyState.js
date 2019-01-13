@@ -1,35 +1,36 @@
 import posed from 'react-pose';
 import React from 'react';
 import { Cat } from 'react-kawaii';
-import styled, { keyframes } from 'styled-components';
 
 import Message from './Message';
-import Flex from '../../Layout/FlexRowCentered';
+import LoadingIndicator from '../../LoadingIndicator';
 
-const move = keyframes({
-  from: { transform: 'translateX(0)', transform: 'rotate(0deg)', width: 100 },
-  to: { transform: 'translateX(5%)', transform: 'rotate(360deg)', width: 25 }
+const NoMessages = React.forwardRef((props, ref) => (
+  <div ref={ref}>
+    <Message>Don´t you have any friends? No messages for the fat one here. </Message>
+    <Message>Use the app and get we´ll comment your progress - or un-progress </Message>
+    <Cat size={320} mood="shocked" color="#596881" />
+  </div>
+));
+
+const NoMessagesPosed = posed(NoMessages)({
+  enter: {
+    y: 0,
+    opacity: 1,
+    delayChildren: 500,
+    staggerChildren: 500,
+    transition: {
+      y: { type: 'spring', stiffness: 1000, damping: 15 },
+      default: { duration: 300 }
+    }
+  },
+  exit: { y: 20, opacity: 0, transition: { duration: 150 } }
 });
-
-const LoadingIndicator = styled(Flex)`
-  animation: ${move} 1s ease-in-out forwards alternate infinite;
-  width: 100px;
-  height: 25px;
-  border-radius: 25px;
-  display: inline-block;
-  background: hotpink;
-`;
 
 const EmptyState = React.forwardRef((props, ref) => (
   <div ref={ref}>
-    {props.loading && <LoadingIndicator />}
-    {!props.loading &&
-      props.noMessages && (
-        <div>
-          <Message>Don´t you have any friends? No messages for the fat one here. </Message>
-          <Cat size={320} mood="shocked" color="#596881" />
-        </div>
-      )}
+    {props.loading && <LoadingIndicator initialPose="exit" pose="enter" />}
+    {!props.loading && props.noMessages && <NoMessagesPosed initialPose="exit" pose="enter" />}
   </div>
 ));
 

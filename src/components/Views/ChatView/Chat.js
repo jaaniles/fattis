@@ -60,7 +60,7 @@ class Chat extends Component {
             {typing && <Typing />}
           </FlexColumn>
         ) : (
-          <ChatEmptyState loading={chat.loading} noMessages={chat.history.length < 1} />
+          <ChatEmptyState loading={chat.loading} noMessages={chat.history.length < 1} initialPose="exit" pose="enter" />
         )}
       </div>
     );
