@@ -14,20 +14,17 @@ const jump = keyframes({
 
 const NewMessages = styled(Flex)`
   animation: ${jump} 1s linear forwards alternate infinite;
-  width: 50px;
-  height: 50px;
-  background: ${ds.colors.green};
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   transition: all 0.1s ease-in-out;
 
-  font-size: 50px;
   color: white;
   text-align: center;
-  line-height: 70px;
 
   position: fixed;
-  right: 50px;
-  bottom: 50px;
+  right: ${ds.scale(1)};
+  bottom: ${ds.scale(1)};
 
   &:hover {
     cursor: pointer;
@@ -36,7 +33,7 @@ const NewMessages = styled(Flex)`
 `;
 
 const Icon = styled.img({
-  width: 30
+  width: 85
 });
 
 const NewMessagesWidget = React.forwardRef((props, ref) => (
@@ -48,6 +45,6 @@ const NewMessagesWidget = React.forwardRef((props, ref) => (
 ));
 
 export default posed(NewMessagesWidget)({
-  enter: { width: '100%', transition: { duration: 200 } },
-  exit: { width: '1%', transition: { duration: 200 } }
+  enter: { opacity: 1, transition: { duration: 200 } },
+  exit: { opacity: 0, transition: { duration: 200 } }
 });

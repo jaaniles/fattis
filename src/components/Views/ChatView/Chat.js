@@ -20,7 +20,7 @@ class Chat extends Component {
     }
 
     this.setState({ typing: true, ready: false });
-    await waitFor(randomIntFromInterval(10, 20) * 100);
+    await waitFor(randomIntFromInterval(1, 2) * 1000);
 
     const { newMessages } = chat;
     if (newMessages.length < 1) {

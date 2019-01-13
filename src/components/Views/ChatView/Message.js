@@ -5,7 +5,7 @@ import { darken } from 'polished';
 import * as ds from '../../../design';
 
 const Message = styled.div({
-  width: '300px',
+  width: 200,
 
   backgroundColor: darken(0.05, 'white'),
   color: ds.type.color.dark,
@@ -19,7 +19,11 @@ const Message = styled.div({
 
   '&:last-of-type': {
     borderBottomRightRadius: 0
-  }
+  },
+
+  ...ds.minWidth.bigMobile({
+    width: 300
+  })
 });
 
 export default posed(Message)({

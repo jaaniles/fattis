@@ -2,6 +2,8 @@ import posed from 'react-pose';
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+import * as ds from '../../../design';
+
 const jump = keyframes({
   from: { transform: 'translateX(-50%)' },
   to: { transform: 'translateX(50%)' }
@@ -9,7 +11,7 @@ const jump = keyframes({
 
 const Ball1 = styled.div`
   animation: ${jump} 500ms ease-in-out forwards alternate infinite;
-  background-color: hotpink;
+  background-color: ${ds.colors.red};
   border-radius: 50%;
   display: block;
   height: 0.5rem;
@@ -34,6 +36,8 @@ const fadeIn = keyframes({
 });
 
 const Container = styled.div`
+  margin-top 2rem;
+
   animation: ${fadeIn} 125ms ease-in-out;
   display: block;
   height: 0.5rem;
