@@ -17,7 +17,7 @@ import * as ds from '../design';
 class MainApp extends Component {
   state = {
     sidebarOpen: false,
-    yViewIndex: 1,
+    yViewIndex: 0,
     xViewindex: 0
   };
 
