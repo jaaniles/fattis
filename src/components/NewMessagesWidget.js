@@ -1,11 +1,10 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import posed from 'react-pose';
+import { SpeechBubble } from 'react-kawaii';
 
 import * as ds from '../design';
 import Flex from './Layout/FlexRowCentered';
-
-const newMessageIcon = require('../icons/chat.svg');
 
 const jump = keyframes({
   from: { transform: 'scale(1.1)' },
@@ -32,14 +31,10 @@ const NewMessages = styled(Flex)`
   }
 `;
 
-const Icon = styled.img({
-  width: 85
-});
-
 const NewMessagesWidget = React.forwardRef((props, ref) => (
   <button ref={ref} onClick={() => props.handleClick(1)}>
     <NewMessages>
-      <Icon src={newMessageIcon} alt="New messages!" />
+      <SpeechBubble size={50} />
     </NewMessages>
   </button>
 ));

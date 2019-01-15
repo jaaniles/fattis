@@ -159,9 +159,9 @@ const dayAsColors = day => {
   }
 
   return {
-    GYM: day.GYM ? ds.colors.tea : ds.colors.pink,
-    HEALTHY: day.HEALTHY ? ds.colors.tea : ds.colors.pink,
-    WALK: day.WALK ? ds.colors.tea : ds.colors.pink
+    GYM: day.GYM ? ds.colors.tea : ds.colors.red,
+    HEALTHY: day.HEALTHY ? ds.colors.tea : ds.colors.red,
+    WALK: day.WALK ? ds.colors.tea : ds.colors.red
   };
 };
 
