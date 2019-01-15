@@ -37,6 +37,7 @@ export const colors = {
   background: {
     level0: '#34344d',
     level2: '#150C22',
+    level3: '#1e162b',
     level5: '#14080E',
     purple: '#22031F'
   }

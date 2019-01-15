@@ -14,9 +14,9 @@ const gymIcon = require('../../../icons/workout.svg');
 const walkIcon = require('../../../icons/walk.svg');
 const healthyIcon = require('../../../icons/healthy.svg');
 
-const Page = styled(PageLayout)`
-  background: #1e162b;
-`;
+const Page = styled(PageLayout)({
+  background: ds.colors.background.level3
+});
 
 const ActionIcon = styled.img({
   filter: 'grayscale(85%)',
@@ -62,7 +62,6 @@ const Event = styled.div`
     opacity: 0.75;
     position: relative;
     margin-left: ${ds.scale(5)};
-    color: #8a809b;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -153,9 +152,9 @@ class ActivityTimelineView extends Component {
 const dayAsColors = day => {
   if (day.future) {
     return {
-      GYM: lighten(0.05, '#1e162b'),
-      HEALTHY: lighten(0.025, '#1e162b'),
-      WALK: lighten(0.05, '#1e162b')
+      GYM: lighten(0.05, ds.colors.background.level3),
+      HEALTHY: lighten(0.025, ds.colors.background.level3),
+      WALK: lighten(0.05, ds.colors.background.level3)
     };
   }
 
