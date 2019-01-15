@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import ReactSVG from 'react-svg';
 import { darken } from 'polished';
 
 import Row from '../../Layout/FlexRowCentered';
@@ -10,7 +9,7 @@ const gymIcon = require('../../../icons/workout.svg');
 const walkIcon = require('../../../icons/walk.svg');
 const healthyIcon = require('../../../icons/healthy.svg');
 
-const Icon = styled(ReactSVG)`
+const Icon = styled.img`
   width: 55px;
   height: 55px;
   filter: grayscale(70%);

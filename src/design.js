@@ -31,10 +31,14 @@ export const colors = {
   red: '#E37868',
   green: '#74D0AF',
   tea: '#CBEAA6',
+  teal: '#58F8DD',
+  pink: '#EF517E',
 
   background: {
     level0: '#34344d',
-    level5: '#14080E'
+    level2: '#150C22',
+    level5: '#14080E',
+    purple: '#22031F'
   }
 };
 
@@ -42,6 +46,12 @@ export const shadows = {
   small: `0 0.25rem 1rem rgba(0, 0, 0, 0.2)`,
   medium: `0 ${scale(0.5)} ${scale(1)} rgba(0, 0, 0, 0.2)`,
   large: `0 ${scale(3)} ${scale(10)} rgba(0, 0, 0, 0.6)`
+};
+
+export const glows = {
+  small: `0 0.25rem 1rem rgba(138, 125, 155, 0.2)`,
+  medium: `0 ${scale(0.5)} ${scale(1)} rgba(138, 125, 155, 0.2)`,
+  large: `0 ${scale(3)} ${scale(10)} rgba(138, 125, 155, 0.6)`
 };
 
 export const zIndex = {

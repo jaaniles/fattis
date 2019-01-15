@@ -8,17 +8,17 @@ import reset from 'css-wipe/js';
 
 import Login from './Login';
 import ChatView from './Views/ChatView/';
-import WeekView from './Views/WeekView';
 import SettingsView from './Views/SettingsView';
 import FattisView from './Views/FattisView/';
+import ActivityTimeline from './Views/ActivityTimelineView';
 import Withings from './Withings';
 import * as ds from '../design';
 
 class MainApp extends Component {
   state = {
     sidebarOpen: false,
-    yViewIndex: 0,
-    xViewindex: 1
+    yViewIndex: 1,
+    xViewindex: 0
   };
 
   componentDidMount() {
@@ -70,7 +70,7 @@ class MainApp extends Component {
           index={yViewIndex}
         >
           <FattisView changeView={this.setXIndex} />
-          <WeekView />
+          <ActivityTimeline />
           <SettingsView />
         </SwipeableViews>
         <ChatView isShown={xViewindex === 1} />
