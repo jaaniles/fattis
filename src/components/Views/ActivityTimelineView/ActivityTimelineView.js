@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { DateTime } from 'luxon';
+import TimeAgo from 'react-timeago';
 
 import { lighten } from 'polished';
 
@@ -18,10 +19,24 @@ const Page = styled(PageLayout)({
   background: ds.colors.background.level3
 });
 
+const Arrow = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 800;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: ${ds.colors.red};
+  border: 1px solid ${ds.colors.red};
+`;
+
 const ActionIcon = styled.img({
-  filter: 'grayscale(85%)',
-  width: 35,
-  height: 35,
+  width: 25,
+  height: 25,
   opacity: 0.85,
 
   ...ds.minWidth.bigMobile({
@@ -59,12 +74,14 @@ const Event = styled.div`
   margin: ${ds.scale(1)} 0;
 
   div {
-    opacity: 0.75;
+    opacity: 0.8;
+    min-height: 35px;
     position: relative;
     margin-left: ${ds.scale(5)};
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 
     background: linear-gradient(
       to right,
@@ -73,20 +90,14 @@ const Event = styled.div`
       ${props => props.day.WALK} 100%
     );
 
-    padding: ${ds.scale(1)};
+    padding: 5px;
+    border-radius: 0.25em;
 
     > :not(:last-child) {
       margin-right: ${ds.scale(2)};
     }
 
     transition: 200ms all ease-in-out;
-
-    ${props =>
-      props.isToday &&
-      css`
-        transform: scale(1.025);
-        box-shadow: ${ds.glows.small};
-      `};
   }
 
   ${TimelineIcon} {
@@ -99,38 +110,72 @@ const Event = styled.div`
     height: 40px;
     border-radius: 50%;
     border: 1px solid black;
-    transform: ${props => (props.isToday ? 'scale(1.5)' : 'none')};
   }
 
   transition: all 200ms ease-in-out;
 `;
 
+const Buttons = styled.div({
+  width: '90%',
+
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  color: ds.type.color.secondaryDark,
+  marginBottom: ds.scale(1),
+
+  button: {
+    cursor: 'pointer',
+    background: 'none',
+    outline: 'none',
+    border: 0
+  }
+});
+
 class ActivityTimelineView extends Component {
   state = {
-    today: DateTime.local()
+    today: DateTime.local(),
+    weekOffset: 0
+  };
+
+  nextWeek = () => {
+    const weekOffset = this.state.weekOffset + 1;
+    this.setState({ weekOffset });
+  };
+  lastWeek = () => {
+    const weekOffset = this.state.weekOffset - 1;
+    this.setState({ weekOffset });
   };
 
   render() {
-    const { today } = this.state;
+    const { today, weekOffset } = this.state;
     const { logs } = this.props;
 
-    const days = daysOfWeek(today).map(
+    const d = today.plus({ weeks: weekOffset });
+
+    const days = daysOfWeek(d).map(
       d =>
         ({
           ...logs[d.toISODate()],
-          isToday: d.toISODate() === today.toISODate(),
           future: d > today
         } || {})
     );
 
-    console.log(days);
-
     return (
       <Page>
-        <h1>This week</h1>
+        <Buttons>
+          <button onClick={this.lastWeek}>
+            <Arrow>{`<`}</Arrow>
+          </button>
+          <h1>{weekOffset === 0 ? 'THIS WEEK' : <TimeAgo date={d} live={false} />}</h1>
+          <button disabled={weekOffset === 0} onClick={this.nextWeek}>
+            <Arrow>{`>`}</Arrow>
+          </button>
+        </Buttons>
         <Timeline>
           {days.map((day, i) => (
-            <Event key={i} day={dayAsColors(day)} isToday={day.isToday}>
+            <Event key={i} day={dayAsColors(day)}>
               <TimelineIcon alt="weekday" src={weekdayIcons[i]} />
               <div>
                 {!day.future && (

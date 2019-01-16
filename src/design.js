@@ -69,7 +69,8 @@ export const type = {
     primary: '#E7E8F2',
     dark: '#14080E',
     secondary: '#707086',
-    tertiary: '#2F436F'
+    tertiary: '#2F436F',
+    secondaryDark: '#5e5869'
   },
 
   bodyFont: {

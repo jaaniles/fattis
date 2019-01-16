@@ -22,8 +22,8 @@ const NewMessages = styled(Flex)`
   text-align: center;
 
   position: fixed;
-  right: ${ds.scale(1)};
-  bottom: ${ds.scale(1)};
+  right: ${ds.scale(3)};
+  bottom: ${ds.scale(5)};
 
   &:hover {
     cursor: pointer;
@@ -34,7 +34,7 @@ const NewMessages = styled(Flex)`
 const NewMessagesWidget = React.forwardRef((props, ref) => (
   <button ref={ref} onClick={() => props.handleClick(1)}>
     <NewMessages>
-      <SpeechBubble size={50} />
+      <SpeechBubble size={50} color={ds.colors.tea} />
     </NewMessages>
   </button>
 ));
