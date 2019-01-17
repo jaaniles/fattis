@@ -5,6 +5,10 @@ import * as qs from 'query-string';
 import firebase from 'firebase/app';
 import 'firebase/functions';
 
+import Page from '../components/Layout/Page';
+import LoadingIndicator from '../components/LoadingIndicator';
+import * as ds from '../design';
+
 class Withings extends Component {
   state = {
     redirect: null
@@ -38,10 +42,11 @@ class Withings extends Component {
     const { redirect } = this.state;
 
     return (
-      <div>
-        <h4>Authenticating Withings...</h4>
+      <Page background={ds.colors.background.level2}>
+        <h1 style={{ fontWeight: 800 }}>Authenticating Withings...</h1>
+        <LoadingIndicator />
         {redirect && <Redirect to="/" />}
-      </div>
+      </Page>
     );
   }
 }
