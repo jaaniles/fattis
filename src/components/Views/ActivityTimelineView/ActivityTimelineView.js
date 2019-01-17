@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { DateTime } from 'luxon';
 import TimeAgo from 'react-timeago';
-
 import { lighten } from 'polished';
 
+import TimelineEmptyState from './TimelineEmptyState';
 import { daysOfWeek } from '../../../services/calendar';
 import PageLayout from '../../Layout/Page';
 import weekdayIcons from '../../../icons/icons';
@@ -74,7 +74,6 @@ const Event = styled.div`
   margin: ${ds.scale(1)} 0;
 
   div {
-    opacity: 0.8;
     min-height: 35px;
     position: relative;
     margin-left: ${ds.scale(5)};
@@ -136,7 +135,8 @@ const Buttons = styled.div({
 class ActivityTimelineView extends Component {
   state = {
     today: DateTime.local(),
-    weekOffset: 0
+    weekOffset: 0,
+    exitEmptyState: false
   };
 
   nextWeek = () => {
@@ -147,10 +147,25 @@ class ActivityTimelineView extends Component {
     const weekOffset = this.state.weekOffset - 1;
     this.setState({ weekOffset });
   };
+  log = what => {
+    this.setState({ exitEmptyState: true });
+    setTimeout(() => {
+      this.props.logDate(what);
+      this.setState({ dbg: true });
+    }, 500);
+  };
 
   render() {
-    const { today, weekOffset } = this.state;
-    const { logs } = this.props;
+    const { today, weekOffset, exitEmptyState } = this.state;
+    const { logs, loading, toggles } = this.props;
+
+    if (logs.length < 1) {
+      return (
+        <Page>
+          <TimelineEmptyState loading={loading} toggles={toggles} handleClick={this.log} exit={exitEmptyState} />
+        </Page>
+      );
+    }
 
     const d = today.plus({ weeks: weekOffset });
 
@@ -204,19 +219,20 @@ const dayAsColors = day => {
   }
 
   return {
-    GYM: day.GYM ? ds.colors.tea : ds.colors.red,
-    HEALTHY: day.HEALTHY ? ds.colors.tea : ds.colors.red,
-    WALK: day.WALK ? ds.colors.tea : ds.colors.red
+    GYM: day.GYM ? ds.colors.red : lighten(0.05, ds.colors.background.level3),
+    HEALTHY: day.HEALTHY ? ds.colors.red : lighten(0.05, ds.colors.background.level3),
+    WALK: day.WALK ? ds.colors.red : lighten(0.05, ds.colors.background.level3)
   };
 };
 
 export default connect(
   state => ({
-    logs: state.log.logs
+    logs: state.log.logs,
+    loading: state.log.loading,
+    toggles: state.log.logs[DateTime.local().toISODate()]
   }),
   dispatch => ({
     loadChat: dispatch.chat.loadChat,
-    readMessage: dispatch.chat.readMessage,
-    addNewMessage: dispatch.chat.addNewMessage
+    logDate: dispatch.log.logDate
   })
 )(ActivityTimelineView);

@@ -5,7 +5,7 @@ const EMPTY_LOGS = [];
 
 const logs = {
   state: {
-    isLoading: false,
+    loading: false,
     logs: EMPTY_LOGS
   },
   reducers: {
@@ -14,14 +14,22 @@ const logs = {
         ...state,
         logs
       };
+    },
+    setLoading(state, payload) {
+      return {
+        ...state,
+        loading: payload
+      };
     }
   },
   effects: dispatch => ({
     async loadLogs(payload, rootState) {
+      this.setLoading(true);
       const { uid } = rootState.auth.user;
 
       await fb.logs(uid).on('value', snap => {
         this.setLog(snap.val() || EMPTY_LOGS);
+        this.setLoading(false);
       });
     },
     async logDate(payload, rootState) {
