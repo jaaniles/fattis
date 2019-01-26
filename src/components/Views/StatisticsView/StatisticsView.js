@@ -154,10 +154,6 @@ class StatisticsView extends Component {
     weeksSinceRegistration: null
   };
 
-  componentDidMount() {
-    //this.weekSelector.current.scrollLeft = this.weekSelector.current.scrollWidth;
-  }
-
   getWeeksFromRegistration = () => {
     const { today } = this.state;
     const { registeredAt } = this.props;
@@ -170,6 +166,10 @@ class StatisticsView extends Component {
       console.log(weeksSinceRegistration, weeksSinceRegistration.weeks);
       this.setState({ weeksSinceRegistration: Math.round(weeksSinceRegistration.weeks) });
     }
+  };
+
+  scrollWeekSelector = () => {
+    this.weekSelector.current.scrollLeft = this.weekSelector.current.scrollWidth;
   };
 
   changeWeek = offset => {
@@ -265,6 +265,7 @@ class StatisticsView extends Component {
                   registeredAt={registeredAt}
                   handleClick={this.switchWeekTo}
                   weekOffset={weekOffset}
+                  scrollWeekSelector={this.scrollWeekSelector}
                 />
               )}
             </WeekSelector>

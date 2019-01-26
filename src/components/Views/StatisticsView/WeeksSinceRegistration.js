@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { DateTime } from 'luxon';
 import styled from 'styled-components';
 import TimeAgo from 'react-timeago';
@@ -27,6 +26,10 @@ class WeeksSinceRegistration extends Component {
     return t.minus({ weeks: i });
   };
 
+  componentDidMount() {
+    this.props.scrollWeekSelector();
+  }
+
   render() {
     const { registeredAt, today, handleClick, weekOffset } = this.props;
 
@@ -38,8 +41,6 @@ class WeeksSinceRegistration extends Component {
     const r = DateTime.fromISO(registeredAt);
 
     const weeksSinceRegistration = t.diff(r, 'weeks').toObject();
-
-    console.log(weeksSinceRegistration.weeks, Math.round(weeksSinceRegistration.weeks));
 
     const WeeksSinceRegistration = [...Array(Math.round(weeksSinceRegistration.weeks)).keys()].reverse().map(i => (
       <WeekButton key={i} toggle={weekOffset === i * -1} onClick={() => handleClick(i * -1)}>
