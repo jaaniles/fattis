@@ -10,15 +10,15 @@ import Login from './Login';
 import ChatView from './Views/ChatView/';
 import SettingsView from './Views/SettingsView';
 import FattisView from './Views/FattisView/';
-import ActivityTimeline from './Views/ActivityTimelineView';
+import StatisticsView from './Views/StatisticsView';
 import Withings from './Withings';
 import * as ds from '../design';
 
 class MainApp extends Component {
   state = {
     sidebarOpen: false,
-    yViewIndex: 0,
-    xViewindex: 0
+    yViewIndex: 1,
+    xViewIndex: 0
   };
 
   componentDidMount() {
@@ -26,6 +26,7 @@ class MainApp extends Component {
     this.props.loadLogs();
     this.props.initWithings();
     this.props.loadWeight();
+    this.props.loadUser();
   }
 
   componentDidUpdate() {
@@ -50,7 +51,7 @@ class MainApp extends Component {
   };
 
   render() {
-    const { xViewindex, yViewIndex } = this.state;
+    const { xViewIndex, yViewIndex } = this.state;
 
     return (
       <SwipeableViews
@@ -59,7 +60,9 @@ class MainApp extends Component {
         axis="x"
         onChangeIndex={this.sideMenuOpen}
         resistance
-        index={xViewindex}
+        index={xViewIndex}
+        ignoreNativeScroll
+        disabled={yViewIndex !== 0}
       >
         <SwipeableViews
           onChangeIndex={this.setYIndex}
@@ -70,10 +73,10 @@ class MainApp extends Component {
           index={yViewIndex}
         >
           <FattisView changeView={this.setXIndex} />
-          <ActivityTimeline />
+          <StatisticsView />
           <SettingsView />
         </SwipeableViews>
-        <ChatView isShown={xViewindex === 1} />
+        <ChatView isShown={xViewIndex === 1} />
       </SwipeableViews>
     );
   }
@@ -166,6 +169,7 @@ const MainAppConnected = connect(
     loadLogs: dispatch.log.loadLogs,
     initWithings: dispatch.withings.init,
     updateWeight: dispatch.withings.updateWeight,
+    loadUser: dispatch.auth.loadUser,
     loadWeight: dispatch.weight.loadWeight
   })
 )(MainApp);
@@ -175,7 +179,6 @@ export default connect(
     isLoggedIn: state.auth.isLoggedIn
   }),
   dispatch => ({
-    login: dispatch.auth.login,
     loadLogs: dispatch.log.loadLogs,
     logout: dispatch.auth.logout
   })

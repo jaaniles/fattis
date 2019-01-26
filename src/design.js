@@ -33,6 +33,7 @@ export const colors = {
   tea: '#CBEAA6',
   teal: '#58F8DD',
   pink: '#EF517E',
+  terra: '#D05353',
 
   background: {
     level0: '#34344d',

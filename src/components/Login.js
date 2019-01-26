@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/app';
+import fb from './Firebase';
 import 'firebase/auth';
 
 const uiConfig = {
@@ -15,9 +16,27 @@ const uiConfig = {
 
 class Login extends Component {
   componentDidMount() {
-    const { setLoggedIn } = this.props;
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => setLoggedIn(user));
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(this.handleAuth);
   }
+
+  handleAuth = async user => {
+    const { createUser, setLoggedIn } = this.props;
+
+    if (!user) {
+      return;
+    }
+
+    try {
+      const userExists = await fb.userExists(user.uid).once('value');
+      if (!userExists.val()) {
+        createUser();
+      }
+    } catch (e) {
+      console.log('Big error!', e);
+    }
+
+    setLoggedIn(user);
+  };
 
   componentWillUnmount() {
     this.unregisterAuthObserver();
@@ -33,6 +52,7 @@ export default connect(
     isLoggedIn: state.auth.isLoggedIn
   }),
   dispatch => ({
-    setLoggedIn: dispatch.auth.setLoggedIn
+    setLoggedIn: dispatch.auth.setLoggedIn,
+    createUser: dispatch.auth.createUser
   })
 )(Login);
