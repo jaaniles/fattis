@@ -30,6 +30,8 @@ const withings = {
       const { uid } = rootState.auth.user;
       const { access_token } = rootState.withings;
 
+      console.log('update weight');
+
       if (!access_token || !uid) {
         return;
       }
@@ -47,7 +49,7 @@ const withings = {
       }
 
       const weightData = response.body.measuregrps.map(measure => {
-        const date = DateTime.fromMillis(measure.created * 1000);
+        const date = DateTime.fromMillis(measure.date * 1000);
         return {
           date: date.toISODate(),
           value: measure.measures[0].value / 1000

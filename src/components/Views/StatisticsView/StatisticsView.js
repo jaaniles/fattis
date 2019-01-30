@@ -10,6 +10,7 @@ import Page from '../../Layout/Page';
 import FlexColumn from '../../Layout/FlexColumnCenterHorizontal';
 import Row from '../../Layout/FlexRowCentered';
 import AnimatedNumber from './AnimatedNumber';
+import EmptyState from './EmptyState';
 import WeeksSinceRegistration from './WeeksSinceRegistration';
 
 import fb from '../../Firebase';
@@ -79,6 +80,7 @@ const WeekSelector = styled.div({
   display: 'flex',
   flexWrap: 'nowrap',
   alignItems: 'center',
+  justifyContent: 'center',
 
   overflowX: 'scroll',
   overflowY: 'hidden',
@@ -169,6 +171,10 @@ class StatisticsView extends Component {
   };
 
   scrollWeekSelector = () => {
+    if (!this.weekSelector || !this.weekSelector.current) {
+      return;
+    }
+
     this.weekSelector.current.scrollLeft = this.weekSelector.current.scrollWidth;
   };
 
@@ -182,8 +188,16 @@ class StatisticsView extends Component {
   };
 
   render() {
-    const { today, weekOffset, exitEmptyState } = this.state;
+    const { today, weekOffset } = this.state;
     const { logs, loading, toggles, weight, registeredAt } = this.props;
+
+    if (logs.length < 1) {
+      return (
+        <Page background={ds.colors.background.purple}>
+          <EmptyState loading={loading} toggles={toggles} handleClick={this.log} />
+        </Page>
+      );
+    }
 
     const d = today.plus({ weeks: weekOffset });
     const days = daysOfWeek(d);
@@ -194,6 +208,7 @@ class StatisticsView extends Component {
 
     const weightThisWeek = fb
       .toArray(weight)
+      .sort((a, b) => DateTime.fromISO(a.id) - DateTime.fromISO(b.id))
       .filter(data => DateTime.fromISO(data.id).toFormat('W') === d.toFormat('W'));
 
     const weightDifference = getWeightDifference(weightThisWeek) || 0;
