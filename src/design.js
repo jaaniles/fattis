@@ -26,6 +26,7 @@ export const minWidth = Object.entries(breakpoints).reduce((minWidth, current) =
 export const scale = number => modularScale(number).replace('em', 'rem');
 
 export const colors = {
+  white: '#E7E8F2',
   black: '#000000',
   blue: '#7EB7E1',
   red: '#E37868',
@@ -67,7 +68,7 @@ export const zIndex = {
 export const type = {
   color: {
     interactive: '#2575FF',
-    primary: '#E7E8F2',
+    primary: colors.white,
     dark: '#14080E',
     secondary: '#707086',
     tertiary: '#2F436F',

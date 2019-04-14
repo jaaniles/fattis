@@ -1,68 +1,49 @@
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
-import { darken } from 'polished';
+import styled from 'styled-components';
 
+import Action from './Action';
 import Row from '../../Layout/FlexRowCentered';
+import HoldableAction from './HoldableAction';
+
+import gymIcon from '../../../icons/workout.svg';
+import walkIcon from '../../../icons/walk.svg';
+import healthyIcon from '../../../icons/healthy.svg';
+
 import * as ds from '../../../design';
 
-const gymIcon = require('../../../icons/workout.svg');
-const walkIcon = require('../../../icons/walk.svg');
-const healthyIcon = require('../../../icons/healthy.svg');
+const GymAction = ({ toggled }) => <Action toggled={toggled} icon={gymIcon} label="Gym" />;
+const WalkAction = ({ toggled }) => <Action toggled={toggled} icon={walkIcon} label="Extra Walk" />;
+const HealthyAction = ({ toggled }) => <Action toggled={toggled} icon={healthyIcon} label="Ate healthy" />;
 
-const Icon = styled.img`
-  width: 55px;
-  height: 55px;
-  filter: grayscale(70%);
+const Separator = styled.div({
+  width: '95%',
+  ...ds.minWidth.tablet({
+    width: '80%'
+  }),
 
-  transition: all 0.2s ease-in-out;
-`;
-
-const Action = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-
-  font-size: 10pt;
-
-  width: 33%;
-  height: 150px;
-
-  color: ${ds.type.color.secondary};
-
-  ${props =>
-    props.pressed &&
-    css`
-      color: ${ds.colors.red};
-      background: ${darken(0.1, ds.colors.background.level0)};
-      transform: scale(0.95);
-      ${Icon} {
-        filter: none;
-      }
-    `};
-
-  transition: all 0.2s ease-in-out;
-`;
+  margin: '0 auto',
+  border: `1px solid ${ds.colors.terra}`
+});
 
 class Actions extends Component {
   render() {
     const { toggles, handleClick } = this.props;
 
     return (
-      <Row>
-        <Action pressed={toggles && toggles.GYM} onClick={() => handleClick('GYM')}>
-          <Icon src={gymIcon} />
-          <p>GYM</p>
-        </Action>
-        <Action pressed={toggles && toggles.HEALTHY} onClick={() => handleClick('HEALTHY')}>
-          <Icon src={healthyIcon} />
-          <p>ATE HEALTHY</p>
-        </Action>
-        <Action pressed={toggles && toggles.WALK} onClick={() => handleClick('WALK')}>
-          <Icon src={walkIcon} />
-          <p>EXTRA WALK</p>
-        </Action>
-      </Row>
+      <>
+        <Row>
+          <HoldableAction toggled={toggles && toggles.GYM} callback={() => handleClick('GYM')}>
+            <GymAction />
+          </HoldableAction>
+          <HoldableAction toggled={toggles && toggles.WALK} callback={() => handleClick('WALK')}>
+            <WalkAction />
+          </HoldableAction>
+          <HoldableAction toggled={toggles && toggles.HEALTHY} callback={() => handleClick('HEALTHY')}>
+            <HealthyAction />
+          </HoldableAction>
+        </Row>
+        <Separator />
+      </>
     );
   }
 }

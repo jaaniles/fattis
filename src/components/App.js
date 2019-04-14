@@ -17,7 +17,7 @@ import * as ds from '../design';
 class MainApp extends Component {
   state = {
     sidebarOpen: false,
-    yViewIndex: 1,
+    yViewIndex: 0,
     xViewIndex: 0
   };
 
@@ -83,8 +83,19 @@ class MainApp extends Component {
 }
 
 class App extends Component {
+  componentDidMount() {
+    if (typeof window !== 'undefined') {
+      window.oncontextmenu = function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      };
+    }
+  }
+
   render() {
     const { isLoggedIn } = this.props;
+
     return (
       <>
         <GlobalStyle />

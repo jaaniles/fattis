@@ -8,8 +8,6 @@ import FattisPlaceholder from '../../Characters/FattisPlaceholder';
 import NewMessagesWidget from '../../NewMessagesWidget';
 import Actions from './Actions';
 
-import * as ds from '../../../design';
-
 class FattisView extends Component {
   log = what => {
     this.props.logDate(what);

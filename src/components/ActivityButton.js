@@ -16,7 +16,7 @@ const Button = styled.button`
   font-size: 16pt;
 
   ${props =>
-    props.pressed &&
+    props.toggled &&
     `
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transform: scale(0.80);
@@ -46,7 +46,7 @@ class ActivityButton extends Component {
 
     return (
       <ButtonContainer onClick={this.pressButton}>
-        <Button pressed={this.props.toggled}>{text ? text : <FontAwesomeIcon icon={icon} />}</Button>
+        <Button toggled={this.props.toggled}>{text ? text : <FontAwesomeIcon icon={icon} />}</Button>
       </ButtonContainer>
     );
   }
