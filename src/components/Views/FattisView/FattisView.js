@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 
 import Highlight from '../../Highlight';
 import Page from '../../Layout/Page';
-import FattisPlaceholder from '../../Characters/FattisPlaceholder';
+import Fattis from '../../Characters/Fattis';
 import NewMessagesWidget from '../../NewMessagesWidget';
 import Actions from './Actions';
 
@@ -18,7 +18,7 @@ class FattisView extends Component {
 
     return (
       <Page>
-        <FattisPlaceholder />
+        <Fattis />
         <h4>
           Did <Highlight>FATTIS</Highlight> do anything worthwhile today?
         </h4>

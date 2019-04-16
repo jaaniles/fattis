@@ -22,7 +22,7 @@ const Separator = styled.div({
   }),
 
   margin: '0 auto',
-  border: `1px solid ${ds.colors.terra}`
+  border: `1px solid ${ds.colors.white}`
 });
 
 class Actions extends Component {

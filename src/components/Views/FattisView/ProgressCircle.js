@@ -4,7 +4,7 @@ import posed from 'react-pose';
 
 import * as ds from '../../../design';
 
-const circleSize = 145;
+const circleSize = 125;
 const strokeWidth = 4;
 const radius = circleSize / 2 - strokeWidth * 2;
 const circumference = radius * 2 * Math.PI;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { PoseGroup } from 'react-pose';
 import reset from 'css-wipe/js';
 
@@ -13,6 +13,9 @@ import FattisView from './Views/FattisView/';
 import StatisticsView from './Views/StatisticsView';
 import Withings from './Withings';
 import * as ds from '../design';
+import HeroImage from './HeroImage';
+
+const Content = styled.div({});
 
 class MainApp extends Component {
   state = {
@@ -36,48 +39,13 @@ class MainApp extends Component {
     }
   }
 
-  sideMenuOpen = index => {
-    this.setXIndex(index);
-    if (index === 1) this.setState({ sidebarOpen: true });
-    else this.setState({ sidebarOpen: false });
-  };
-
-  setYIndex = index => {
-    this.setState({ yViewIndex: index });
-  };
-
-  setXIndex = index => {
-    this.setState({ xViewindex: index });
-  };
-
   render() {
-    const { xViewIndex, yViewIndex } = this.state;
-
     return (
-      <SwipeableViews
-        enableMouseEvents
-        containerStyle={{ width: '100%' }}
-        axis="x"
-        onChangeIndex={this.sideMenuOpen}
-        resistance
-        index={xViewIndex}
-        ignoreNativeScroll
-        disabled={yViewIndex !== 0}
-      >
-        <SwipeableViews
-          onChangeIndex={this.setYIndex}
-          enableMouseEvents
-          containerStyle={{ height: '100vh' }}
-          axis="y"
-          resistance
-          index={yViewIndex}
-        >
-          <FattisView changeView={this.setXIndex} />
-          <StatisticsView />
-          <SettingsView />
-        </SwipeableViews>
-        <ChatView isShown={xViewIndex === 1} />
-      </SwipeableViews>
+      <>
+        <Content>
+          <FattisView />
+        </Content>
+      </>
     );
   }
 }
@@ -102,6 +70,7 @@ class App extends Component {
         <PoseGroup>
           <Router key="router">
             <div>
+              <HeroImage />
               {!isLoggedIn ? (
                 <Route path="/" component={Login} key="login" />
               ) : (
@@ -125,18 +94,17 @@ const GlobalStyle = createGlobalStyle(reset, {
 
   body: {
     ...ds.type.bodyFont,
-    backgroundColor: ds.colors.background.level1,
+    backgroundColor: ds.colors.background.purple,
     color: ds.type.color.primary,
     fontSize: ds.sizes.default,
-    height: '100%',
-    overflowX: 'hidden',
-    overflowY: 'auto',
+    userSelect: 'none',
     margin: 0
   },
 
   '#root': {
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
     minHeight: '100%'
   },
 

@@ -10,22 +10,32 @@ const HeroImageContainer = styled.div({
   top: 0,
   left: 0,
   width: '100%',
-  minHeight: '50vh',
-  maxHeight: 600,
+  minHeight: '25vh',
+  maxHeight: 300,
   overflow: 'hidden',
   pointerEvents: 'none',
-  zIndex: ds.zIndex.high,
 
   img: {
     width: '100%',
     height: '100%',
-    objectFit: 'cover'
+    objectFit: 'cover',
+    filter: 'sepia(2)'
   }
+});
+
+const FadeIntoBackground = styled.div({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: `linear-gradient(to top, ${ds.colors.background.purple} 25%, transparent 100%, rgba(26,5,42,0) 300px)`
 });
 
 const HeroImage = () => (
   <HeroImageContainer>
     <img src={heroImage} alt="Fat man jogging" />
+    <FadeIntoBackground />
   </HeroImageContainer>
 );
 

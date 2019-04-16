@@ -102,7 +102,6 @@ const Event = styled.div`
   ${TimelineIcon} {
     position: absolute;
     background: hotpink;
-    z-index: ${ds.zIndex.high};
     top: 0;
     left: 0;
     width: 40px;
